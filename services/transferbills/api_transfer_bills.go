@@ -111,3 +111,43 @@ func (a *TransferBillsApiService) GetTransferBillByOutBillNo(ctx context.Context
 	}
 	return resp, result, nil
 }
+
+// CancelTransferBill 撤销转账
+//
+// 商户可以通过该接口撤销已发起但尚未完成的转账单。只有在用户尚未确认收款时才能撤销。
+func (a *TransferBillsApiService) CancelTransferBill(ctx context.Context, req CancelTransferBillRequest) (resp *CancelTransferBillResponse, result *core.APIResult, err error) {
+	var (
+		localVarHTTPMethod   = nethttp.MethodPost
+		localVarPostBody     interface{}
+		localVarQueryParams  neturl.Values
+		localVarHeaderParams = nethttp.Header{}
+	)
+
+	// Make sure Path Params are properly set
+	if req.OutBillNo == nil {
+		return nil, nil, fmt.Errorf("field `OutBillNo` is required and must be specified in CancelTransferBillRequest")
+	}
+
+	localVarPath := consts.WechatPayAPIServer + "/v3/fund-app/mch-transfer/transfer-bills/out-bill-no/{out_bill_no}/cancel"
+	// Build Path with Path Params
+	localVarPath = strings.Replace(localVarPath, "{"+"out_bill_no"+"}", neturl.PathEscape(core.ParameterToString(*req.OutBillNo, "")), -1)
+
+	// Determine the Content-Type Header
+	localVarHTTPContentTypes := []string{"application/json"}
+	// Setup Content-Type
+	localVarHTTPContentType := core.SelectHeaderContentType(localVarHTTPContentTypes)
+
+	// Perform Http Request
+	result, err = a.Client.Request(ctx, localVarHTTPMethod, localVarPath, localVarHeaderParams, localVarQueryParams, localVarPostBody, localVarHTTPContentType)
+	if err != nil {
+		return nil, result, err
+	}
+
+	// Extract CancelTransferBillResponse from Http Response
+	resp = new(CancelTransferBillResponse)
+	err = core.UnMarshalResponse(result.Response, resp)
+	if err != nil {
+		return nil, result, err
+	}
+	return resp, result, nil
+}

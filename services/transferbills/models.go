@@ -30,6 +30,8 @@ const (
 	TRANSFERSTATE_SUCCESS      TransferState = "SUCCESS"
 	TRANSFERSTATE_FAIL         TransferState = "FAIL"
 	TRANSFERSTATE_WAIT_PAY     TransferState = "WAIT_PAY"
+	TRANSFERSTATE_CANCELING    TransferState = "CANCELING"
+	TRANSFERSTATE_CANCELLED    TransferState = "CANCELLED"
 )
 
 // CreateTransferBillRequest
@@ -592,6 +594,138 @@ func (o TransferBillEntity) Clone() *TransferBillEntity {
 	if o.FailReason != nil {
 		ret.FailReason = new(string)
 		*ret.FailReason = *o.FailReason
+	}
+
+	return &ret
+}
+
+// CancelTransferBillRequest
+type CancelTransferBillRequest struct {
+	// 商户订单号
+	OutBillNo *string `json:"out_bill_no"`
+}
+
+func (o CancelTransferBillRequest) MarshalJSON() ([]byte, error) {
+	toSerialize := map[string]interface{}{}
+
+	if o.OutBillNo == nil {
+		return nil, fmt.Errorf("field `OutBillNo` is required and must be specified in CancelTransferBillRequest")
+	}
+	toSerialize["out_bill_no"] = o.OutBillNo
+
+	return json.Marshal(toSerialize)
+}
+
+func (o CancelTransferBillRequest) String() string {
+	var ret string
+	if o.OutBillNo == nil {
+		ret += "OutBillNo:<nil>"
+	} else {
+		ret += fmt.Sprintf("OutBillNo:%v", *o.OutBillNo)
+	}
+
+	return fmt.Sprintf("CancelTransferBillRequest{%s}", ret)
+}
+
+func (o CancelTransferBillRequest) Clone() *CancelTransferBillRequest {
+	ret := CancelTransferBillRequest{}
+
+	if o.OutBillNo != nil {
+		ret.OutBillNo = new(string)
+		*ret.OutBillNo = *o.OutBillNo
+	}
+
+	return &ret
+}
+
+// CancelTransferBillResponse
+type CancelTransferBillResponse struct {
+	// 商户订单号
+	OutBillNo *string `json:"out_bill_no"`
+	// 微信转账单号
+	TransferBillNo *string `json:"transfer_bill_no"`
+	// 转账状态
+	State *TransferState `json:"state"`
+	// 转账更新时间
+	UpdateTime *time.Time `json:"update_time"`
+}
+
+func (o CancelTransferBillResponse) MarshalJSON() ([]byte, error) {
+	toSerialize := map[string]interface{}{}
+
+	if o.OutBillNo == nil {
+		return nil, fmt.Errorf("field `OutBillNo` is required and must be specified in CancelTransferBillResponse")
+	}
+	toSerialize["out_bill_no"] = o.OutBillNo
+
+	if o.TransferBillNo == nil {
+		return nil, fmt.Errorf("field `TransferBillNo` is required and must be specified in CancelTransferBillResponse")
+	}
+	toSerialize["transfer_bill_no"] = o.TransferBillNo
+
+	if o.State == nil {
+		return nil, fmt.Errorf("field `State` is required and must be specified in CancelTransferBillResponse")
+	}
+	toSerialize["state"] = o.State
+
+	if o.UpdateTime == nil {
+		return nil, fmt.Errorf("field `UpdateTime` is required and must be specified in CancelTransferBillResponse")
+	}
+	toSerialize["update_time"] = o.UpdateTime.Format(time.RFC3339)
+
+	return json.Marshal(toSerialize)
+}
+
+func (o CancelTransferBillResponse) String() string {
+	var ret string
+	if o.OutBillNo == nil {
+		ret += "OutBillNo:<nil>, "
+	} else {
+		ret += fmt.Sprintf("OutBillNo:%v, ", *o.OutBillNo)
+	}
+
+	if o.TransferBillNo == nil {
+		ret += "TransferBillNo:<nil>, "
+	} else {
+		ret += fmt.Sprintf("TransferBillNo:%v, ", *o.TransferBillNo)
+	}
+
+	if o.State == nil {
+		ret += "State:<nil>, "
+	} else {
+		ret += fmt.Sprintf("State:%v, ", *o.State)
+	}
+
+	if o.UpdateTime == nil {
+		ret += "UpdateTime:<nil>"
+	} else {
+		ret += fmt.Sprintf("UpdateTime:%v", *o.UpdateTime)
+	}
+
+	return fmt.Sprintf("CancelTransferBillResponse{%s}", ret)
+}
+
+func (o CancelTransferBillResponse) Clone() *CancelTransferBillResponse {
+	ret := CancelTransferBillResponse{}
+
+	if o.OutBillNo != nil {
+		ret.OutBillNo = new(string)
+		*ret.OutBillNo = *o.OutBillNo
+	}
+
+	if o.TransferBillNo != nil {
+		ret.TransferBillNo = new(string)
+		*ret.TransferBillNo = *o.TransferBillNo
+	}
+
+	if o.State != nil {
+		ret.State = new(TransferState)
+		*ret.State = *o.State
+	}
+
+	if o.UpdateTime != nil {
+		ret.UpdateTime = new(time.Time)
+		*ret.UpdateTime = *o.UpdateTime
 	}
 
 	return &ret
