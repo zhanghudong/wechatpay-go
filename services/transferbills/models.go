@@ -346,6 +346,45 @@ func (o GetTransferBillByOutBillNoRequest) Clone() *GetTransferBillByOutBillNoRe
 	return &ret
 }
 
+// GetTransferBillByTransferBillNoRequest
+type GetTransferBillByTransferBillNoRequest struct {
+	// 微信转账单号
+	TransferBillNo *string `json:"transfer_bill_no"`
+}
+
+func (o GetTransferBillByTransferBillNoRequest) MarshalJSON() ([]byte, error) {
+	toSerialize := map[string]interface{}{}
+
+	if o.TransferBillNo == nil {
+		return nil, fmt.Errorf("field `TransferBillNo` is required and must be specified in GetTransferBillByTransferBillNoRequest")
+	}
+	toSerialize["transfer_bill_no"] = o.TransferBillNo
+
+	return json.Marshal(toSerialize)
+}
+
+func (o GetTransferBillByTransferBillNoRequest) String() string {
+	var ret string
+	if o.TransferBillNo == nil {
+		ret += "TransferBillNo:<nil>"
+	} else {
+		ret += fmt.Sprintf("TransferBillNo:%v", *o.TransferBillNo)
+	}
+
+	return fmt.Sprintf("GetTransferBillByTransferBillNoRequest{%s}", ret)
+}
+
+func (o GetTransferBillByTransferBillNoRequest) Clone() *GetTransferBillByTransferBillNoRequest {
+	ret := GetTransferBillByTransferBillNoRequest{}
+
+	if o.TransferBillNo != nil {
+		ret.TransferBillNo = new(string)
+		*ret.TransferBillNo = *o.TransferBillNo
+	}
+
+	return &ret
+}
+
 // TransferBillEntity
 type TransferBillEntity struct {
 	// 商户号

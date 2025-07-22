@@ -112,6 +112,46 @@ func (a *TransferBillsApiService) GetTransferBillByOutBillNo(ctx context.Context
 	return resp, result, nil
 }
 
+// GetTransferBillByTransferBillNo 通过微信转账单号查询转账单
+//
+// 商户可以通过该接口使用微信转账单号查询转账单的详细信息。返回消息中包含转账状态、转账金额、转账时间等信息。
+func (a *TransferBillsApiService) GetTransferBillByTransferBillNo(ctx context.Context, req GetTransferBillByTransferBillNoRequest) (resp *TransferBillEntity, result *core.APIResult, err error) {
+	var (
+		localVarHTTPMethod   = nethttp.MethodGet
+		localVarPostBody     interface{}
+		localVarQueryParams  neturl.Values
+		localVarHeaderParams = nethttp.Header{}
+	)
+
+	// Make sure Path Params are properly set
+	if req.TransferBillNo == nil {
+		return nil, nil, fmt.Errorf("field `TransferBillNo` is required and must be specified in GetTransferBillByTransferBillNoRequest")
+	}
+
+	localVarPath := consts.WechatPayAPIServer + "/v3/fund-app/mch-transfer/transfer-bills/transfer-bill-no/{transfer_bill_no}"
+	// Build Path with Path Params
+	localVarPath = strings.Replace(localVarPath, "{"+"transfer_bill_no"+"}", neturl.PathEscape(core.ParameterToString(*req.TransferBillNo, "")), -1)
+
+	// Determine the Content-Type Header
+	localVarHTTPContentTypes := []string{}
+	// Setup Content-Type
+	localVarHTTPContentType := core.SelectHeaderContentType(localVarHTTPContentTypes)
+
+	// Perform Http Request
+	result, err = a.Client.Request(ctx, localVarHTTPMethod, localVarPath, localVarHeaderParams, localVarQueryParams, localVarPostBody, localVarHTTPContentType)
+	if err != nil {
+		return nil, result, err
+	}
+
+	// Extract TransferBillEntity from Http Response
+	resp = new(TransferBillEntity)
+	err = core.UnMarshalResponse(result.Response, resp)
+	if err != nil {
+		return nil, result, err
+	}
+	return resp, result, nil
+}
+
 // CancelTransferBill 撤销转账
 //
 // 商户可以通过该接口撤销已发起但尚未完成的转账单。只有在用户尚未确认收款时才能撤销。
