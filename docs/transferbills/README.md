@@ -20,10 +20,10 @@
 
 服务名 | 方法名 | HTTP 请求 | 描述
 ------------ | ------------- | ------------- | -------------
-*TransferBillsApi* | [**CreateTransferBill**](TransferBillsApi.md#createtransferbill) | **Post** /v3/transfer/bills | 发起商家转账到用户零钱
-*TransferBillsApi* | [**GetTransferBillByOutBillNo**](TransferBillsApi.md#gettransferbillbyoutbillno) | **Get** /v3/transfer/bills/out-bill-no/{out_bill_no} | 通过商户订单号查询转账单
-*TransferBillsApi* | [**GetTransferBillByTransferBillNo**](TransferBillsApi.md#gettransferbillbytransferbillno) | **Get** /v3/transfer/bills/transfer-bill-no/{transfer_bill_no} | 通过微信转账单号查询转账单
-*TransferBillsApi* | [**CancelTransferBill**](TransferBillsApi.md#canceltransferbill) | **Post** /v3/transfer/bills/out-bill-no/{out_bill_no}/cancel | 撤销转账
+*TransferBillsApi* | [**CreateTransferBill**](TransferBillsApi.md#createtransferbill) | **Post** /v3/fund-app/mch-transfer/transfer-bills | 发起商家转账到用户零钱
+*TransferBillsApi* | [**GetTransferBillByOutBillNo**](TransferBillsApi.md#gettransferbillbyoutbillno) | **Get** /v3/fund-app/mch-transfer/transfer-bills/out-bill-no/{out_bill_no} | 通过商户订单号查询转账单
+*TransferBillsApi* | [**GetTransferBillByTransferBillNo**](TransferBillsApi.md#gettransferbillbytransferbillno) | **Get** /v3/fund-app/mch-transfer/transfer-bills/transfer-bill-no/{transfer_bill_no} | 通过微信转账单号查询转账单
+*TransferBillsApi* | [**CancelTransferBill**](TransferBillsApi.md#canceltransferbill) | **Post** /v3/fund-app/mch-transfer/transfer-bills/out-bill-no/{out_bill_no}/cancel | 撤销转账
 
 ## 类型列表
 
