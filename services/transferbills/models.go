@@ -34,6 +34,63 @@ const (
 	TRANSFERSTATE_CANCELLED    TransferState = "CANCELLED"
 )
 
+// TransferSceneReportInfo 转账场景信息
+type TransferSceneReportInfo struct {
+	// 信息类型，不能超过15个字符，商户所属转账场景下的信息类型
+	InfoType *string `json:"info_type"`
+	// 信息内容，不能超过32个字符，商户所属转账场景下的信息内容
+	InfoContent *string `json:"info_content"`
+}
+
+func (o TransferSceneReportInfo) MarshalJSON() ([]byte, error) {
+	toSerialize := map[string]interface{}{}
+
+	if o.InfoType == nil {
+		return nil, fmt.Errorf("field `InfoType` is required and must be specified in TransferSceneReportInfo")
+	}
+	toSerialize["info_type"] = o.InfoType
+
+	if o.InfoContent == nil {
+		return nil, fmt.Errorf("field `InfoContent` is required and must be specified in TransferSceneReportInfo")
+	}
+	toSerialize["info_content"] = o.InfoContent
+
+	return json.Marshal(toSerialize)
+}
+
+func (o TransferSceneReportInfo) String() string {
+	var ret string
+	if o.InfoType == nil {
+		ret += "InfoType:<nil>, "
+	} else {
+		ret += fmt.Sprintf("InfoType:%v, ", *o.InfoType)
+	}
+
+	if o.InfoContent == nil {
+		ret += "InfoContent:<nil>"
+	} else {
+		ret += fmt.Sprintf("InfoContent:%v", *o.InfoContent)
+	}
+
+	return fmt.Sprintf("TransferSceneReportInfo{%s}", ret)
+}
+
+func (o TransferSceneReportInfo) Clone() *TransferSceneReportInfo {
+	ret := TransferSceneReportInfo{}
+
+	if o.InfoType != nil {
+		ret.InfoType = new(string)
+		*ret.InfoType = *o.InfoType
+	}
+
+	if o.InfoContent != nil {
+		ret.InfoContent = new(string)
+		*ret.InfoContent = *o.InfoContent
+	}
+
+	return &ret
+}
+
 // CreateTransferBillRequest
 type CreateTransferBillRequest struct {
 	// 商户appid
@@ -48,10 +105,14 @@ type CreateTransferBillRequest struct {
 	TransferAmount *int64 `json:"transfer_amount"`
 	// 转账备注，会显示在微信用户的零钱记录中
 	TransferRemark *string `json:"transfer_remark"`
+	// 转账场景信息，必填参数
+	TransferSceneReportInfos []TransferSceneReportInfo `json:"transfer_scene_report_infos"`
 	// 收款方真实姓名。支持标准RSA算法和国密算法，公钥由微信侧提供
 	UserName *string `json:"user_name,omitempty" encryption:"EM_APIV3"`
-	// 用户确认时需要的包信息
-	PackageInfo *string `json:"package_info,omitempty"`
+	// 异步接收微信支付结果通知的回调地址
+	NotifyUrl *string `json:"notify_url,omitempty"`
+	// 用户收款时感知到的收款原因
+	UserRecvPerception *string `json:"user_recv_perception,omitempty"`
 }
 
 func (o CreateTransferBillRequest) MarshalJSON() ([]byte, error) {
@@ -87,12 +148,21 @@ func (o CreateTransferBillRequest) MarshalJSON() ([]byte, error) {
 	}
 	toSerialize["transfer_remark"] = o.TransferRemark
 
+	if o.TransferSceneReportInfos == nil {
+		return nil, fmt.Errorf("field `TransferSceneReportInfos` is required and must be specified in CreateTransferBillRequest")
+	}
+	toSerialize["transfer_scene_report_infos"] = o.TransferSceneReportInfos
+
 	if o.UserName != nil {
 		toSerialize["user_name"] = o.UserName
 	}
 
-	if o.PackageInfo != nil {
-		toSerialize["package_info"] = o.PackageInfo
+	if o.NotifyUrl != nil {
+		toSerialize["notify_url"] = o.NotifyUrl
+	}
+
+	if o.UserRecvPerception != nil {
+		toSerialize["user_recv_perception"] = o.UserRecvPerception
 	}
 
 	return json.Marshal(toSerialize)
@@ -136,16 +206,24 @@ func (o CreateTransferBillRequest) String() string {
 		ret += fmt.Sprintf("TransferRemark:%v, ", *o.TransferRemark)
 	}
 
+	ret += fmt.Sprintf("TransferSceneReportInfos:%v, ", o.TransferSceneReportInfos)
+
 	if o.UserName == nil {
 		ret += "UserName:<nil>, "
 	} else {
 		ret += fmt.Sprintf("UserName:%v, ", *o.UserName)
 	}
 
-	if o.PackageInfo == nil {
-		ret += "PackageInfo:<nil>"
+	if o.NotifyUrl == nil {
+		ret += "NotifyUrl:<nil>, "
 	} else {
-		ret += fmt.Sprintf("PackageInfo:%v", *o.PackageInfo)
+		ret += fmt.Sprintf("NotifyUrl:%v, ", *o.NotifyUrl)
+	}
+
+	if o.UserRecvPerception == nil {
+		ret += "UserRecvPerception:<nil>"
+	} else {
+		ret += fmt.Sprintf("UserRecvPerception:%v", *o.UserRecvPerception)
 	}
 
 	return fmt.Sprintf("CreateTransferBillRequest{%s}", ret)
@@ -184,14 +262,26 @@ func (o CreateTransferBillRequest) Clone() *CreateTransferBillRequest {
 		*ret.TransferRemark = *o.TransferRemark
 	}
 
+	if o.TransferSceneReportInfos != nil {
+		ret.TransferSceneReportInfos = make([]TransferSceneReportInfo, len(o.TransferSceneReportInfos))
+		for i, item := range o.TransferSceneReportInfos {
+			ret.TransferSceneReportInfos[i] = *item.Clone()
+		}
+	}
+
 	if o.UserName != nil {
 		ret.UserName = new(string)
 		*ret.UserName = *o.UserName
 	}
 
-	if o.PackageInfo != nil {
-		ret.PackageInfo = new(string)
-		*ret.PackageInfo = *o.PackageInfo
+	if o.NotifyUrl != nil {
+		ret.NotifyUrl = new(string)
+		*ret.NotifyUrl = *o.NotifyUrl
+	}
+
+	if o.UserRecvPerception != nil {
+		ret.UserRecvPerception = new(string)
+		*ret.UserRecvPerception = *o.UserRecvPerception
 	}
 
 	return &ret

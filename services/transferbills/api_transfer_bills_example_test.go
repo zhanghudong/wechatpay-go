@@ -47,7 +47,15 @@ func ExampleTransferBillsApiService_CreateTransferBill() {
 			Openid:          core.String("o-MYE42l80oelYMDE34nYD456Xoy"),
 			TransferAmount:  core.Int64(100),
 			TransferRemark:  core.String("理财返佣"),
-			UserName:        core.String("金三"),
+			TransferSceneReportInfos: []transferbills.TransferSceneReportInfo{
+				{
+					InfoType:    core.String("订单信息"),
+					InfoContent: core.String("理财产品收益"),
+				},
+			},
+			UserName:           core.String("金三"),
+			NotifyUrl:          core.String("https://www.example.com/notify"),
+			UserRecvPerception: core.String("理财收益到账"),
 		},
 	)
 
