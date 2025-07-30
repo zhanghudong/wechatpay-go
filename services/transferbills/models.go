@@ -25,13 +25,14 @@ func (e TransferState) Ptr() *TransferState {
 
 // Enums of TransferState
 const (
-	TRANSFERSTATE_WAIT_CONFIRM TransferState = "WAIT_CONFIRM"
-	TRANSFERSTATE_PROCESSING   TransferState = "PROCESSING"
-	TRANSFERSTATE_SUCCESS      TransferState = "SUCCESS"
-	TRANSFERSTATE_FAIL         TransferState = "FAIL"
-	TRANSFERSTATE_WAIT_PAY     TransferState = "WAIT_PAY"
-	TRANSFERSTATE_CANCELING    TransferState = "CANCELING"
-	TRANSFERSTATE_CANCELLED    TransferState = "CANCELLED"
+	TRANSFERSTATE_ACCEPTED          TransferState = "ACCEPTED"
+	TRANSFERSTATE_PROCESSING        TransferState = "PROCESSING"
+	TRANSFERSTATE_WAIT_USER_CONFIRM TransferState = "WAIT_USER_CONFIRM"
+	TRANSFERSTATE_TRANSFERING       TransferState = "TRANSFERING"
+	TRANSFERSTATE_SUCCESS           TransferState = "SUCCESS"
+	TRANSFERSTATE_FAIL              TransferState = "FAIL"
+	TRANSFERSTATE_CANCELING         TransferState = "CANCELING"
+	TRANSFERSTATE_CANCELLED         TransferState = "CANCELLED"
 )
 
 // TransferSceneReportInfo 转账场景信息
